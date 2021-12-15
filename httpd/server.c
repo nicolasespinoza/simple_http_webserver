@@ -13,7 +13,6 @@ void send_html_error(char* message) {
 }
 
 void send_reply(int response_code, int content_length) {
-    // TODO: BEFORE THE FINAL TEXT IS SENT, VERIFY CLIENT IS STILL CONNECTED
     if (response_code == 400) {
         send_html_error("HTTP/1.0 400 Bad Request");
     } else if (response_code == 403) {

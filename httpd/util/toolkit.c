@@ -73,20 +73,3 @@ void print_file_contents(FILE* file) {
 
     free(line_buffer);
 }
-
-int safe_fork() {
-    int process_id = fork();
-    if (process_id < 0) {
-        perror("fork error");
-        exit(-1);
-    }
-    return process_id;
-}
-
-int is_parent(int process_id) {
-    return process_id != -1 && process_id != 0; // just to make code more readable
-}
-
-int is_child(int process_id) {
-    return process_id == 0; // just to make code more readable
-}
