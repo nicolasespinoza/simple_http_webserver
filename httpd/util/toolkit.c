@@ -41,6 +41,7 @@ int string_to_int(char* value, int should_be_positive) {
         exit(-1);
     }
 
+    free(value_copy);
     return converted;
 }
 
