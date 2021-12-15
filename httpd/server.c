@@ -42,21 +42,17 @@ void end_request_cleanup(FILE* file, struct arraylist* split_request_text, char*
     }
     array_list_cleanup(split_request_text);
 
-//    close(client_file_descriptor);
+    //close(client_file_descriptor);
 
     // restore stdout file descriptors
     dup2(previous_std_out, 1);
     close(previous_std_out);
-
-//    exit(0); exiting just makes it to the connection never closes
 }
 
 void handle_client_request(char* client_request, int client_file_descriptor) {
     int previous_std_out = dup(1); // previous stdout
     dup2(client_file_descriptor, STDOUT_FILENO);
-    close(client_file_descriptor); // this closes the connection
-
-//    printf("Client request: [%s]\n", client_request);
+    close(client_file_descriptor);
 
     struct arraylist* split_request_text = split(client_request, " ");
 
@@ -112,7 +108,6 @@ void handle_client_request(char* client_request, int client_file_descriptor) {
     send_reply(200, file_size);
     if (is_get) {
         print_file_contents(file);
-//        printf("\n");
     }
     end_request_cleanup(file, split_request_text, expected_valid_file_name, previous_std_out, client_file_descriptor);
 
@@ -134,17 +129,6 @@ void handle_request(int nfd)
    while ((num = getline(&line, &size, network)) >= 0) {
        handle_client_request(line, nfd);
        close(nfd);
-       // close file descriptor for client?
-       //exit(0); // should exit after the first line is processed. All other lines will not be processed
-//            printf("Done\n");
-//            write(nfd, "done", 10);
-//            close(nfd);
-//            exit(0);
-//        }
-//       handle_client_request(line, nfd);
-
-//      write(nfd, line, size); // backup. origin
-//       write(nfd, "lol test", size);
    }
 
    free(line);
@@ -165,10 +149,8 @@ void run_service(int fd)
               int pid = getpid();
               printf("Connection established (ID: %d)\n", pid);
               handle_request(nfd);
-
               close(fd);
               close(nfd);
-
               printf("Connection closed (ID: %d)\n", pid);
 
               exit(0);
