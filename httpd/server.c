@@ -21,7 +21,7 @@ void send_reply(int response_code, int content_length) {
     } else if (response_code == 404) {
         send_html_error("HTTP/1.0 404 Not Found");
     } else if (response_code == 500) {
-        send_html_error("HTTP/1.0 500 Internal Error"); // TODO: not covered
+        send_html_error("HTTP/1.0 500 Internal Error");
     } else if (response_code == 200) {
         printf("HTTP/1.0 200 OK\r\n");
         printf("Content-Type: text/html\r\n");
